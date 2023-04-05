@@ -1,0 +1,46 @@
+<div mat-dialog-title>
+  <h1 style="font-family: Arial, sans-serif;  display: flex;
+  justify-content: center;">Employee Details</h1>
+</div>
+<div mat-dialog-content class="content" style="width: 480; padding: 20px;">
+  <div class="row">
+    <label style="font-family: Arial, sans-serif; margin-right: 10px;">First Name:</label>
+    <span>{{ empData.firstname.charAt(0).toUpperCase() + empData.firstname.slice(1) }}</span>
+  </div>
+  <div class="row">
+    <label style="font-family: Arial, sans-serif; margin-right: 10px;">Last Name:</label>
+    <span>{{ empData.lastname.charAt(0).toUpperCase() + empData.lastname.slice(1) }}</span>
+  </div>
+  <div class="row">
+    <label style="font-family: Arial, sans-serif; margin-right: 10px;">Email:</label>
+    <span>{{ empData.email.charAt(0).toUpperCase() + empData.email.slice(1) }}</span>
+  </div>
+  
+  <div class="row">
+    <label style="font-family: Arial, sans-serif; margin-right: 9px;">Gender:</label>
+    <span>{{ empData.gender.charAt(0).toUpperCase() + empData.gender.slice(1) }}</span>
+  </div>
+  <div class="row">
+    <label style="font-family: Arial, sans-serif; margin-right: 10px;">Salary:</label>
+    <span>{{  '$'+ empData.salary }}</span>
+  </div>
+  
+  
+</div>
+<div mat-dialog-actions class="action">
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" style="font-family: Arial, sans-serif;">Close</button>
+</div>
+
+<style>
+  .row {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .row label {
+    width: 120px;
+  }
+  .content {
+    margin: 0 auto;
+  }
+</style>
