@@ -9,6 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CoreService } from '../core/core.service';
 import { Employee } from '../../models/Employee';
 import { Apollo, gql } from 'apollo-angular';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 const get_employees = gql `query {
   getEmployees {
     id
@@ -59,15 +61,19 @@ export class ViewEmployeesListComponent implements OnInit{
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
+    private router : Router,
     private _dialog: MatDialog,
     private _empService: EmployeeService,
     private _coreService: CoreService
-    ,
+    ,private authService: AuthService,
     private apollo: Apollo
   ) {}
 
   ngOnInit(): void {
-this.getEmployeeList()
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
+        this.getEmployeeList()
   }
 
   openAddEditEmpForm() {
@@ -92,7 +98,11 @@ this.getEmployeeList()
       },
     });
   }
-
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+  
   getEmployeeList() {
     
     this.apollo.watchQuery<any>({

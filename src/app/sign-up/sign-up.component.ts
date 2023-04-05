@@ -10,6 +10,8 @@ import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 
 
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const SIGNUP_MUTATION = gql`
 mutation Signup($username: String!, $email: String!, $password: String!) {
@@ -28,6 +30,7 @@ mutation Signup($username: String!, $email: String!, $password: String!) {
 
 
 import { Apollo, gql } from 'apollo-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -40,13 +43,13 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-  
+    private router: Router,
     private _coreService: CoreService,
     
     private apollo: Apollo
   ) {
     this.singUpForm = this._fb.group({
-      
+      username:"",
       email: '',
       password:""
     });
@@ -57,35 +60,36 @@ export class SignUpComponent implements OnInit {
   }
 
   onFormSubmit() {
-    this.apollo
-    .watchQuery({
-      query: LOGIN_QUERY,
-      variables: this.singUpForm.value
+    const { username, email, password } = this.singUpForm.value;
+    this.apollo.mutate({
+      mutation: SIGNUP_MUTATION,
+      variables: {
+        username,
+        email,
+        password,
+      },
     })
-    .valueChanges
     .pipe(
       catchError((error: any) => {
         console.error(error);
-        const errorMessage = error.message ? error.message : 'Invalid credentials';
-        this._coreService.openSnackBar(errorMessage);
-        console.log(errorMessage)
+        const errorMessage = error.message ? error.message : 'username';
+       
+        const usernameIndex = errorMessage.indexOf("username: ");
+const emailIndex = errorMessage.indexOf("email: ");
+const username = errorMessage.slice(usernameIndex + 10, emailIndex).trim();
+const email = errorMessage.slice(emailIndex + 7).trim();
+console.log(username, email);
+const errorString = `Username error: ${username}  Email error: ${email}`;
+this._coreService.openSnackBar(errorString);
         return EMPTY;
       })
     )
     .subscribe((val: any) => {
-      this._coreService.openSnackBar('Employee added successfully');
-      console.log(val);
+      this._coreService.openSnackBar('User added successfully');
+      this.router.navigateByUrl('/login');
     });
   
-        // this._empService.addEmployee(this.singUpForm.value).subscribe({
-        //   next: (val: any) => {
-        //     this._coreService.openSnackBar('Employee added successfully');
-        //     this._dialogRef.close(true);
-        //   },
-        //   error: (err: any) => {
-        //     console.error(err);
-        //   },
-        // });
+       
       
       }
   

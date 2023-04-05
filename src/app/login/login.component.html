@@ -32,14 +32,14 @@
             <div class="row">
         <mat-form-field appearance="outline">
             <mat-label>Password </mat-label>
-            <input matInput type="text" placeholder="Ex. Technical" formControlName="password" required>
+            <input matInput type="password" placeholder="Ex. Technical" formControlName="password" required>
         </mat-form-field>
     </div>
        
       
         </div>
         <div mat-dialog-actions class="action">
-          <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+          <button mat-raised-button routerLink="/signup" type="button">Signup</button>
           <button mat-raised-button color="primary" type="submit">Submit </button>
 
       </div>

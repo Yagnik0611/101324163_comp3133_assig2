@@ -14,8 +14,8 @@ const LOGIN_QUERY = gql`
   query Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       user {
+        username
         email
-        password
       }
       token
     }
@@ -26,6 +26,8 @@ const LOGIN_QUERY = gql`
 
 
 import { Apollo, gql } from 'apollo-angular';
+import { SignUpComponent } from '../sign-up/sign-up.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-  
+    private router: Router,
     private _coreService: CoreService,
     
     private apollo: Apollo
@@ -56,6 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   onFormSubmit() {
+    console.log(this.loginForm)
     this.apollo
     .watchQuery({
       query: LOGIN_QUERY,
@@ -72,20 +75,17 @@ export class LoginComponent implements OnInit {
       })
     )
     .subscribe((val: any) => {
-      this._coreService.openSnackBar('Employee added successfully');
-      console.log(val);
+      this._coreService.openSnackBar('You Loged In successfully.');
+
+      const token = val.data.login.token;
+      localStorage.setItem('token', token);
+  
+      this.router.navigateByUrl('/employees');
+      
+     
     });
   
-        // this._empService.addEmployee(this.loginForm.value).subscribe({
-        //   next: (val: any) => {
-        //     this._coreService.openSnackBar('Employee added successfully');
-        //     this._dialogRef.close(true);
-        //   },
-        //   error: (err: any) => {
-        //     console.error(err);
-        //   },
-        // });
-      
+       
       }
   
 }

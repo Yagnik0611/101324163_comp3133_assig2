@@ -1,8 +1,11 @@
 <router-outlet> <mat-toolbar color="primary">
-    <span>Crud Application</span>
+    <span>EMployee Management Application</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button (click)="openAddEditEmpForm()">
+    <button class="add-employee-btn" mat-raised-button (click)="openAddEditEmpForm()">
       ADD EMPLOYEE
+    </button>
+    <button mat-raised-button (click)="logout()">
+     LogOut
     </button>
   </mat-toolbar>
   
