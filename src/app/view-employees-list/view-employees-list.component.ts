@@ -139,6 +139,7 @@ this.apollo.mutate({
 }).subscribe({
     next: (res) => {
       this._coreService.openSnackBar('Employee deleted!', 'done');
+      window.location.reload()
       this.getEmployeeList();
     },
     error: console.log,
