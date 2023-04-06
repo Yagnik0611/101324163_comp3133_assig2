@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'signup', component:SignUpComponent},
 
   {path: 'login', component:LoginComponent},
-  {path: '**', redirectTo: 'listings'}
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

@@ -56,6 +56,7 @@ export class ViewEmployeesListComponent implements OnInit{
   ];
   employees : Employee[] = []
   dataSource!: MatTableDataSource<any>;
+  isLoading!: boolean;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -81,6 +82,7 @@ export class ViewEmployeesListComponent implements OnInit{
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
+          window.location.reload();
           this.getEmployeeList();
         }
       },
@@ -110,6 +112,7 @@ export class ViewEmployeesListComponent implements OnInit{
     }).valueChanges
     .subscribe(({data, loading}) => {
       console.log(loading);
+      this.isLoading = loading
       this.employees = data.getEmployees; 
       console.log(data)
       this.dataSource = new MatTableDataSource( this.employees);

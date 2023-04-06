@@ -17,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
           return {
             cache: new InMemoryCache(),
             link: httpLink.create({
-              uri: 'http://localhost:4000/graphql',
+              uri: 'https://101324163-comp3133-assignment1.cyclic.app/graphql',
             }),
           };
         },
