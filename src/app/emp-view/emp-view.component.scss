@@ -1,6 +1,21 @@
+.row {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
 
-  .row {
-    display: flex;
-    margin-bottom: 10px;
-  }
- 
+.row label {
+  width: 120px;
+}
+
+.row span {
+  flex: 1;
+}
+
+.content {
+  margin: 0 auto;
+  width: 500px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}

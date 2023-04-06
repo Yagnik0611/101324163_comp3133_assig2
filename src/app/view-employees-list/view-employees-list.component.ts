@@ -82,7 +82,9 @@ export class ViewEmployeesListComponent implements OnInit{
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 1800);
           this.getEmployeeList();
         }
       },
@@ -103,6 +105,9 @@ export class ViewEmployeesListComponent implements OnInit{
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
+    this._coreService.openSnackBar('You have  Loged Out !', 'ok');
+
+
   }
   
   getEmployeeList() {
@@ -138,19 +143,15 @@ this.apollo.mutate({
   variables: { id: id }
 }).subscribe({
     next: (res) => {
-      this._coreService.openSnackBar('Employee deleted!', 'done');
-      window.location.reload()
+      this._coreService.openSnackBar('Employee deleted!', 'ok');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1800);
       this.getEmployeeList();
     },
     error: console.log,
   });
-    // this._empService.deleteEmployee(id).subscribe({
-    //   next: (res) => {
-    //     this._coreService.openSnackBar('Employee deleted!', 'done');
-    //     this.getEmployeeList();
-    //   },
-    //   error: console.log,
-    // });
+   
   }
 
   openEditForm(data: any) {

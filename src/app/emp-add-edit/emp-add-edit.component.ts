@@ -104,15 +104,29 @@ export class EmpAddEditComponent implements OnInit {
           mutation: UPDATE_EMPLOYEE_MUTATION,
           variables: updatedEmployee
         }).subscribe({
-              next: (val: any) => {
-                this._coreService.openSnackBar('Employee detail updated!');
-                this._dialogRef.close(true);
-                
-              },
-              error: (err: any) => {
-                console.error(err);
-              },
-            });
+          next: (val: any) => {
+            const errorData = val?.data?.updateEmployee;
+            console.log(errorData)
+            if (errorData.email.includes('Validator failed for')) {
+            
+              this._coreService.openSnackBar('Employee Email validation Failed!');
+            } else {
+              this._coreService.openSnackBar('Employee updated successfully');
+              this._dialogRef.close(true);
+                      }
+            
+            console.log(val)
+          },
+          error: (err: any) => {
+            console.error(err);
+            const errorData = err?.error?.data?.updateEmployee;
+            if (errorData && errorData.email) {
+              this.emailError = errorData.email;
+            } else {
+              this._coreService.openSnackBar('Failed to update employee');
+            }
+          },
+        });
           }
            } else {
 
@@ -129,7 +143,11 @@ export class EmpAddEditComponent implements OnInit {
                 } else {
                   this._coreService.openSnackBar('Employee added successfully');
                   this._dialogRef.close(true);
-                  window.location.reload();                }
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 1800);
+                  
+                          }
                 
                 console.log(val)
               },
