@@ -52,7 +52,7 @@ export class EmpViewComponent implements OnInit {
       query: GET_EMPLOYEE_BY_ID_QUERY,
       variables: { id }
     }).valueChanges.subscribe(({data, loading}) =>{
-      console.log(loading);
+      
       this.empData = data
       this.empData = this.empData.getEmployeeByID
       // this.empData = result.data.getEmployeeByID;

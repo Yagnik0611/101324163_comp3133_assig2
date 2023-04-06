@@ -6,7 +6,7 @@ import { ViewEmployeesListComponent } from './view-employees-list/view-employees
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
- { path: 'detail/:id', component: EmpViewComponent},
+
   { path: '', redirectTo: 'signup', pathMatch: 'full' },
   { path: 'employees', component: ViewEmployeesListComponent},
   {path: 'signup', component:SignUpComponent},
